@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const API_BASE = "";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 interface Product {
 	id: string;

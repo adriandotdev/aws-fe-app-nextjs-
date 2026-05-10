@@ -1,28 +1,26 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useAuth } from "react-oidc-context";
-import TaskApp from "./components/TaskApp";
 
 export default function Home() {
 	const auth = useAuth();
+	const router = useRouter();
 
-	const signOutRedirect = () => {
-		const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID;
-		const logoutUri = process.env.NEXT_PUBLIC_COGNITO_LOGOUT_URI as string;
-		const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN;
-		auth.removeUser();
-		window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
-	};
+	useEffect(() => {
+		if (!auth.isLoading && auth.isAuthenticated) {
+			router.replace("/products");
+		}
+	}, [auth.isLoading, auth.isAuthenticated, router]);
 
-	if (auth.isLoading) {
+	if (auth.isLoading || auth.isAuthenticated) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-zinc-50">
 				<p className="text-sm text-zinc-400">Loading…</p>
 			</div>
 		);
 	}
-
-	if (auth.isAuthenticated) return <TaskApp onSignOut={signOutRedirect} />;
 
 	return (
 		<div className="flex min-h-screen flex-col bg-white px-6">

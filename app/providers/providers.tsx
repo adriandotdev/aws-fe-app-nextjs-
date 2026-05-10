@@ -9,7 +9,7 @@ const cognitoAuthConfig = {
 	response_type: "code",
 	scope: "email openid phone",
 	onSigninCallback: () => {
-		window.location.replace("/");
+		window.location.replace("/products");
 	},
 };
 
