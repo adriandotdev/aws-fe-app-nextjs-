@@ -191,7 +191,7 @@ export default function TaskApp({ onSignOut }: { onSignOut: () => void }) {
 		parseFloat(form.sellingPrice) >= 0;
 
 	return (
-		<div className="min-h-screen bg-zinc-50">
+		<div className="h-dvh overflow-y-auto bg-zinc-50">
 			<div className="mx-auto max-w-2xl px-4 pb-16 pt-8">
 				{/* Header */}
 				<div className="mb-6 flex items-start justify-between">

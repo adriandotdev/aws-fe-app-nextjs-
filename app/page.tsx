@@ -23,7 +23,7 @@ export default function Home() {
 	}
 
 	return (
-		<div className="flex min-h-screen flex-col bg-white px-6">
+		<div className="flex h-dvh flex-col bg-white px-6">
 			{/* Top section — logo & copy */}
 			<div className="flex flex-1 flex-col items-center justify-center text-center">
 				<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-900">
