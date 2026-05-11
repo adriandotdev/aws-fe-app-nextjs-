@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "react-oidc-context";
+import { InstallPrompt } from "./components/install-prompt";
 
 export default function Home() {
 	const auth = useAuth();
@@ -60,6 +61,9 @@ export default function Home() {
 				>
 					Sign In
 				</button>
+			</div>
+			<div className="fixed top-4 right-4 z-40">
+				<InstallPrompt />
 			</div>
 		</div>
 	);
