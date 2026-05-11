@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "react-oidc-context";
@@ -27,24 +28,13 @@ export default function Home() {
 		<div className="flex h-dvh flex-col bg-white px-6">
 			{/* Top section — logo & copy */}
 			<div className="flex flex-1 flex-col items-center justify-center text-center">
-				<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-900">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="28"
-						height="28"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						className="text-white"
-					>
-						<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-						<line x1="3" y1="6" x2="21" y2="6" />
-						<path d="M16 10a4 4 0 0 1-8 0" />
-					</svg>
-				</div>
+				<Image
+					src={"/logo.png"}
+					width={250}
+					height={250}
+					alt="App logo"
+					priority
+				/>
 				<h1 className="text-2xl font-bold tracking-tight text-zinc-900">
 					Product Manager
 				</h1>
