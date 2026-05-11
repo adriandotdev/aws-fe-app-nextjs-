@@ -304,7 +304,7 @@ export default function TaskApp({ onSignOut }: { onSignOut: () => void }) {
 									</label>
 									<div className="relative">
 										<span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-zinc-400">
-											$
+											₱
 										</span>
 										<input
 											type="number"
@@ -511,7 +511,7 @@ export default function TaskApp({ onSignOut }: { onSignOut: () => void }) {
 								</label>
 								<div className="relative">
 									<span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-zinc-400">
-										$
+										₱
 									</span>
 									<input
 										type="number"
@@ -599,7 +599,7 @@ function ProductCard({
 			{/* Price */}
 			<div className="shrink-0 text-right">
 				<p className="text-base font-semibold text-zinc-900">
-					${product.sellingPrice.toFixed(2)}
+					₱{product.sellingPrice.toFixed(2)}
 				</p>
 			</div>
 
