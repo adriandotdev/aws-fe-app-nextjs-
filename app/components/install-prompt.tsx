@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function InstallPrompt() {
 	const [isIOS, setIsIOS] = useState(false);
 	const [isStandalone, setIsStandalone] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const deferredPrompt = useRef<any>(null);
 
 	useEffect(() => {
 		// eslint-disable-next-line react-hooks/set-state-in-effect
@@ -13,7 +15,23 @@ export function InstallPrompt() {
 		);
 
 		setIsStandalone(window.matchMedia("(display-mode: standalone)").matches);
+
+		const handler = (e: Event) => {
+			e.preventDefault();
+			deferredPrompt.current = e;
+		};
+		window.addEventListener("beforeinstallprompt", handler);
+		return () => window.removeEventListener("beforeinstallprompt", handler);
 	}, []);
+
+	async function handleInstall() {
+		if (deferredPrompt.current) {
+			deferredPrompt.current.prompt();
+			await deferredPrompt.current.userChoice;
+			deferredPrompt.current = null;
+			setIsOpen(false);
+		}
+	}
 
 	if (isStandalone) {
 		return null;
@@ -82,7 +100,10 @@ export function InstallPrompt() {
 								.
 							</p>
 						) : (
-							<button className="w-full rounded-lg bg-black px-4 py-2.5 text-sm font-medium text-white hover:bg-gray-800 active:scale-95 transition-all">
+							<button
+								onClick={handleInstall}
+								className="w-full rounded-lg bg-black px-4 py-2.5 text-sm font-medium text-white hover:bg-gray-800 active:scale-95 transition-all"
+							>
 								Add to Home Screen
 							</button>
 						)}
