@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers/providers";
@@ -11,6 +11,11 @@ const geistSans = Geist({
 export const metadata: Metadata = {
 	title: "Product Manager",
 	description: "Simple product management app",
+};
+
+export const viewport: Viewport = {
+	maximumScale: 1,
+	userScalable: false,
 };
 
 export default function RootLayout({
