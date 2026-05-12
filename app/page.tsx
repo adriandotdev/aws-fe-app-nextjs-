@@ -35,11 +35,8 @@ export default function Home() {
 					alt="App logo"
 					priority
 				/>
-				<h1 className="text-2xl font-bold tracking-tight text-zinc-900">
-					Product Manager
-				</h1>
-				<p className="mt-2 max-w-xs text-sm text-zinc-500">
-					Track and manage your inventory in one place.
+				<p className="max-w-xs text-sm text-zinc-400">
+					Your inventory, organised and always within reach.
 				</p>
 			</div>
 
