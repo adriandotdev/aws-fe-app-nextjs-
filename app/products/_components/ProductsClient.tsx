@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "react-oidc-context";
-import { ProductsPageContent } from "./_components/ProductsPageContent";
+import { ProductsPageContent } from "./ProductsPageContent";
 
 export default function ProductsClient() {
 	const auth = useAuth();
