@@ -42,7 +42,7 @@ function categoryColor(cat: string) {
 	return CATEGORY_COLORS[cat] ?? "bg-zinc-100 text-zinc-600";
 }
 
-export default function TaskApp({ onSignOut }: { onSignOut: () => void }) {
+export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [creating, setCreating] = useState(false);

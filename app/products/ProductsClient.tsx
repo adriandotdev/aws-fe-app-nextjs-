@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "react-oidc-context";
-import TaskApp from "./_components/TaskApp";
+import { ProductsPageContent } from "./_components/ProductsPageContent";
 
 export default function ProductsClient() {
 	const auth = useAuth();
@@ -31,5 +31,5 @@ export default function ProductsClient() {
 		);
 	}
 
-	return <TaskApp onSignOut={signOutRedirect} />;
+	return <ProductsPageContent onSignOut={signOutRedirect} />;
 }
