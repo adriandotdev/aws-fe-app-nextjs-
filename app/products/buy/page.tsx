@@ -13,7 +13,10 @@ import {
 	X,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useReducer, useState } from "react";
+import { useAuth } from "react-oidc-context";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
@@ -64,6 +67,8 @@ function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
 }
 
 export default function BuyPage() {
+	const auth = useAuth();
+	const router = useRouter();
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -140,6 +145,12 @@ export default function BuyPage() {
 		return matchCat && matchSearch;
 	});
 
+	useEffect(() => {
+		if (!auth.isLoading && !auth.isAuthenticated) {
+			router.replace("/");
+		}
+	}, [auth.isLoading, auth.isAuthenticated, router]);
+
 	const usedCategories = [
 		"All",
 		...CATEGORIES.filter(
@@ -185,9 +196,10 @@ export default function BuyPage() {
 			<div className="mx-auto max-w-2xl px-4 pb-32 pt-8">
 				{/* Header */}
 				<div className="mb-6 flex items-start gap-4">
-					<button className="mt-2">
+					<Link href={"/products"}>
 						<ArrowLeftIcon />
-					</button>
+					</Link>
+
 					<div>
 						<h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
 							Buy Products

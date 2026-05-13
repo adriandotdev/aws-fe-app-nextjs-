@@ -1,6 +1,7 @@
 "use client";
 
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { AddProductModal } from "./AddProductModal";
 import { EditProductModal } from "./EditProductModal";
@@ -17,6 +18,7 @@ interface Product {
 }
 
 export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
+	const router = useRouter();
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [creating, setCreating] = useState(false);
@@ -174,7 +176,7 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 		parseFloat(form.sellingPrice) >= 0;
 
 	return (
-		<div className="h-dvh overflow-y-auto bg-zinc-50">
+		<div className="h-dvh overflow-y-auto bg-zinc-50 pb-8">
 			<div className="mx-auto max-w-2xl px-4 pb-16 pt-8">
 				{/* Header */}
 				<div className="mb-6 flex items-start justify-between">
@@ -285,6 +287,15 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 
 			{/* Logout Modal */}
 			<LogoutModal logout={logout} onClose={closeLogout} onLogout={onSignOut} />
+
+			{/* Buy FAB */}
+			<button
+				onClick={() => router.push("/products/buy")}
+				className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 transition hover:bg-emerald-500 active:scale-95 touch-manipulation"
+			>
+				<ShoppingCart size={16} strokeWidth={2.5} />
+				Buy
+			</button>
 		</div>
 	);
 }
