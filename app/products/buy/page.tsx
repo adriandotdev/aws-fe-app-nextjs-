@@ -174,9 +174,9 @@ export default function BuyPage() {
 				<div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
 					<CheckCircle2 size={32} className="text-green-600" />
 				</div>
-				<h2 className="text-xl font-semibold text-zinc-900">Order placed!</h2>
+				<h2 className="text-xl font-semibold text-zinc-900">Sale recorded!</h2>
 				<p className="max-w-xs text-sm text-zinc-500">
-					Your order has been recorded successfully.
+					Transaction saved. Ready for the next customer!
 				</p>
 				<button
 					onClick={() => {
@@ -185,7 +185,7 @@ export default function BuyPage() {
 					}}
 					className="mt-2 rounded-xl bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition active:scale-95"
 				>
-					Buy again
+					New sale
 				</button>
 			</div>
 		);
