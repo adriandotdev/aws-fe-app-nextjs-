@@ -1,5 +1,5 @@
+import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-
 export function useInstallPrompt() {
 	const [isIOS, setIsIOS] = useState(false);
 	const [isStandalone, setIsStandalone] = useState(false);
@@ -47,33 +47,35 @@ export function InstallPromptDialog({
 	onInstall: () => void;
 }) {
 	if (!isOpen) return null;
-
+	//
 	return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
 			onClick={onClose}
 		>
-			<div
-				className="relative w-full max-w-sm mx-4 rounded-2xl bg-white p-6 shadow-xl"
+			<motion.div
+				initial={{ scale: 0 }}
+				animate={{ scale: 1 }}
+				className="relative w-full max-w-sm mx-4 rounded-2xl bg-[#FBF8E9] p-6 shadow-xl border border-[#2C5F14]/10"
 				onClick={(e) => e.stopPropagation()}
 			>
 				<button
 					onClick={onClose}
-					className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+					className="absolute top-4 right-4 text-[#2C5F14]/40 hover:text-[#2C5F14] transition-colors"
 					aria-label="Close"
 				>
 					✕
 				</button>
 
-				<h3 className="text-base font-semibold text-gray-900 mb-1">
+				<h3 className="text-base font-semibold text-blue-950 mb-1">
 					Install App
 				</h3>
-				<p className="text-sm text-gray-500 mb-5">
+				<p className="text-sm text-[#2C5F14]/70 mb-5">
 					Add this app to your home screen for quick access.
 				</p>
 
 				{isIOS ? (
-					<p className="text-sm text-gray-600 leading-relaxed">
+					<p className="text-sm text-[#2C5F14] leading-relaxed">
 						Tap the share button
 						<span role="img" aria-label="share icon">
 							{" "}
@@ -89,12 +91,12 @@ export function InstallPromptDialog({
 				) : (
 					<button
 						onClick={onInstall}
-						className="w-full rounded-lg bg-black px-4 py-2.5 text-sm font-medium text-white hover:bg-gray-800 active:scale-95 transition-all"
+						className="w-full rounded-lg bg-[#2C5F14] px-4 py-2.5 text-sm font-medium text-[#F5C012] hover:bg-[#245010] active:scale-95 transition-all"
 					>
 						Add to Home Screen
 					</button>
 				)}
-			</div>
+			</motion.div>
 		</div>
 	);
 }
