@@ -25,8 +25,8 @@ export default function ProductsClient() {
 
 	if (auth.isLoading || !auth.isAuthenticated) {
 		return (
-			<div className="flex min-h-screen items-center justify-center bg-zinc-50">
-				<p className="text-sm text-zinc-400">Loading…</p>
+			<div className="flex min-h-screen items-center justify-center bg-[#FBF8E9]">
+				<p className="text-sm text-[#2C5F14]/50">Loading…</p>
 			</div>
 		);
 	}

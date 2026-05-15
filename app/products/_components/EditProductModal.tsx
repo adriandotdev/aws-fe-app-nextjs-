@@ -45,15 +45,15 @@ export function EditProductModal({
 						animate={{ y: 0 }}
 						exit={{ y: "100%" }}
 						transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
-						className="w-full max-w-lg rounded-t-2xl bg-white p-5 shadow-xl sm:rounded-2xl"
+						className="w-full max-w-lg rounded-t-2xl bg-[#FBF8E9] p-5 shadow-xl sm:rounded-2xl"
 					>
 						<div className="mb-4 flex items-center justify-between">
-							<h2 className="text-sm font-semibold text-zinc-900">
+							<h2 className="text-sm font-semibold text-blue-950">
 								Edit Product
 							</h2>
 							<button
 								onClick={onClose}
-								className="rounded-md p-1 text-zinc-400 hover:text-zinc-700"
+								className="rounded-md p-1 text-[#2C5F14]/40 hover:text-[#2C5F14]"
 								aria-label="Close"
 							>
 								✕
@@ -61,7 +61,7 @@ export function EditProductModal({
 						</div>
 						<form onSubmit={onSubmit} className="flex flex-col gap-3">
 							<div className="flex flex-col gap-1">
-								<label className="text-xs font-medium text-zinc-500">
+								<label className="text-xs font-medium text-[#2C5F14]/60">
 									Name <span className="text-red-400">*</span>
 								</label>
 								<input
@@ -74,7 +74,7 @@ export function EditProductModal({
 								/>
 							</div>
 							<div className="flex flex-col gap-1">
-								<label className="text-xs font-medium text-zinc-500">
+								<label className="text-xs font-medium text-[#2C5F14]/60">
 									Category <span className="text-red-400">*</span>
 								</label>
 								<select
@@ -82,7 +82,7 @@ export function EditProductModal({
 									onChange={(e) =>
 										setEditForm({ ...editForm, category: e.target.value })
 									}
-									className="rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-400 focus:ring-2 focus:ring-zinc-900/10"
+									className="rounded-lg border border-[#2C5F14]/15 bg-[#FBF8E9] px-3 py-2.5 text-sm text-blue-950 outline-none transition focus:border-[#2C5F14]/40 focus:ring-2 focus:ring-[#2C5F14]/10"
 								>
 									{CATEGORIES.filter((c) => c !== "All").map((c) => (
 										<option key={c} value={c}>
@@ -92,11 +92,11 @@ export function EditProductModal({
 								</select>
 							</div>
 							<div className="flex flex-col gap-1">
-								<label className="text-xs font-medium text-zinc-500">
+								<label className="text-xs font-medium text-[#2C5F14]/60">
 									Selling Price <span className="text-red-400">*</span>
 								</label>
 								<div className="relative">
-									<span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-zinc-400">
+									<span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-[#2C5F14]/40">
 										₱
 									</span>
 									<input
@@ -115,14 +115,14 @@ export function EditProductModal({
 								<button
 									type="submit"
 									disabled={saving}
-									className="flex-1 rounded-lg bg-zinc-900 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40 active:scale-95"
+									className="flex-1 rounded-lg bg-[#2C5F14] py-2.5 text-sm font-medium text-[#F5C012] transition hover:bg-[#245010] disabled:cursor-not-allowed disabled:opacity-40 active:scale-95"
 								>
 									{saving ? "Saving…" : "Save Changes"}
 								</button>
 								<button
 									type="button"
 									onClick={onClose}
-									className="rounded-lg border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-600 transition hover:border-zinc-300 hover:text-zinc-900"
+									className="rounded-lg border border-[#2C5F14]/20 px-4 py-2.5 text-sm font-medium text-[#2C5F14] transition hover:border-[#2C5F14]/40"
 								>
 									Cancel
 								</button>

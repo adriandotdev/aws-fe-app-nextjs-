@@ -176,15 +176,15 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 		parseFloat(form.sellingPrice) >= 0;
 
 	return (
-		<div className="h-dvh overflow-y-auto bg-zinc-50 pb-8">
+		<div className="h-dvh overflow-y-auto bg-[#FBF8E9] pb-8">
 			<div className="mx-auto max-w-2xl px-4 pb-16 pt-8">
 				{/* Header */}
 				<div className="mb-6 flex items-start justify-between">
 					<div>
-						<h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+						<h1 className="text-2xl font-semibold tracking-tight text-blue-950">
 							Products
 						</h1>
-						<p className="mt-0.5 text-sm text-zinc-500">
+						<p className="mt-0.5 text-sm text-[#2C5F14]/60">
 							{products.length} item{products.length !== 1 ? "s" : ""}
 						</p>
 					</div>
@@ -194,14 +194,14 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 								setShowForm((v) => !v);
 								setError(null);
 							}}
-							className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-3 py-2 text-sm font-medium text-white transition hover:bg-zinc-700 active:scale-95"
+							className="flex items-center gap-1.5 rounded-lg bg-[#2C5F14] px-3 py-2 text-sm font-medium text-[#F5C012] transition hover:bg-[#245010] active:scale-95"
 						>
 							<Plus size={14} strokeWidth={2.5} />
 							Add
 						</button>
 						<button
 							onClick={openLogout}
-							className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-600 transition hover:border-zinc-300 hover:text-zinc-900"
+							className="rounded-lg border border-[#2C5F14]/20 bg-[#FBF8E9] px-3 py-2 text-sm font-medium text-[#2C5F14] transition hover:border-[#2C5F14]/40"
 						>
 							Sign out
 						</button>
@@ -226,14 +226,14 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 				<div className="relative mb-4">
 					<Search
 						size={14}
-						className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"
+						className="absolute left-3 top-1/2 -translate-y-1/2 text-[#2C5F14]/40"
 					/>
 					<input
 						type="search"
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
 						placeholder="Search products…"
-						className="w-full rounded-lg border border-zinc-200 bg-white py-2.5 pl-9 pr-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition focus:border-zinc-400 focus:ring-2 focus:ring-zinc-900/10"
+						className="w-full rounded-lg border border-[#2C5F14]/15 bg-white/60 py-2.5 pl-9 pr-4 text-sm text-blue-950 placeholder-[#2C5F14]/30 outline-none transition focus:border-[#2C5F14]/40 focus:ring-2 focus:ring-[#2C5F14]/10"
 					/>
 				</div>
 
@@ -245,8 +245,8 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 							onClick={() => setActiveCategory(cat)}
 							className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition ${
 								activeCategory === cat
-									? "bg-zinc-900 text-white"
-									: "bg-white border border-zinc-200 text-zinc-600 hover:border-zinc-300 hover:text-zinc-900"
+									? "bg-[#2C5F14] text-[#F5C012]"
+									: "bg-[#FBF8E9] border border-[#2C5F14]/15 text-[#2C5F14]/70 hover:border-[#2C5F14]/30"
 							}`}
 						>
 							{cat}
@@ -291,7 +291,7 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 			{/* Buy FAB */}
 			<button
 				onClick={() => router.push("/products/buy")}
-				className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 transition hover:bg-emerald-500 active:scale-95 touch-manipulation"
+				className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-[#2C5F14] px-5 py-3.5 text-sm font-semibold text-[#F5C012] shadow-lg shadow-[#2C5F14]/30 transition hover:bg-[#245010] active:scale-95 touch-manipulation"
 			>
 				<ShoppingCart size={16} strokeWidth={2.5} />
 				Buy

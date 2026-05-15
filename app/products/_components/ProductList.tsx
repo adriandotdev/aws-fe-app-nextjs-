@@ -29,7 +29,7 @@ export function ProductList({
 		return (
 			<div className="flex flex-col gap-3">
 				{[1, 2, 3].map((i) => (
-					<div key={i} className="h-20 animate-pulse rounded-xl bg-zinc-200" />
+					<div key={i} className="h-20 animate-pulse rounded-xl bg-[#2C5F14]/10" />
 				))}
 			</div>
 		);
@@ -52,14 +52,14 @@ export function ProductList({
 
 			{filtered.length === 0 && (
 				<div className="py-20 text-center">
-					<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100">
+					<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#2C5F14]/10">
 						<ShoppingBag
 							size={20}
 							strokeWidth={1.5}
 							className="text-zinc-400"
 						/>
 					</div>
-					<p className="text-sm text-zinc-400">No products found.</p>
+					<p className="text-sm text-[#2C5F14]/40">No products found.</p>
 				</div>
 			)}
 		</>
@@ -84,16 +84,16 @@ function ProductCard({
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, x: 100 }}
 			transition={{ duration: 0.2 }}
-			className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-3.5 shadow-sm hover:border-zinc-300"
+			className="flex items-center gap-3 rounded-xl border border-[#2C5F14]/15 bg-[#FBF8E9] px-4 py-3.5 shadow-sm hover:border-[#2C5F14]/25"
 		>
 			{/* Icon */}
-			<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-zinc-500">
+			<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#2C5F14]/10 text-[#2C5F14]">
 				<ShoppingBag size={16} strokeWidth={1.8} />
 			</div>
 
 			{/* Info */}
 			<div className="min-w-0 flex-1">
-				<p className="truncate text-sm font-medium text-zinc-900">
+				<p className="truncate text-sm font-medium text-blue-950">
 					{product.name}
 				</p>
 				<span
@@ -105,7 +105,7 @@ function ProductCard({
 
 			{/* Price */}
 			<div className="shrink-0 text-right">
-				<p className="text-base font-semibold text-zinc-900">
+				<p className="text-base font-semibold text-blue-950">
 					₱{product.sellingPrice.toFixed(2)}
 				</p>
 			</div>
@@ -113,7 +113,7 @@ function ProductCard({
 			{/* Edit */}
 			<button
 				onClick={() => onEdit(product)}
-				className="shrink-0 rounded-md p-1.5 text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-700"
+				className="shrink-0 rounded-md p-1.5 text-[#2C5F14]/40 transition hover:bg-[#2C5F14]/10 hover:text-[#2C5F14]"
 				aria-label="Edit product"
 			>
 				<SquarePen size={15} />
@@ -133,7 +133,7 @@ function ProductCard({
 					</button>
 					<button
 						onClick={() => setConfirming(false)}
-						className="rounded-md border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 transition hover:border-zinc-300"
+						className="rounded-md border border-[#2C5F14]/20 px-2.5 py-1 text-xs font-medium text-[#2C5F14] transition hover:border-[#2C5F14]/40"
 					>
 						No
 					</button>
