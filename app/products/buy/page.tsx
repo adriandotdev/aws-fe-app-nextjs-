@@ -195,19 +195,32 @@ export default function BuyPage() {
 		<div className="h-dvh overflow-y-auto bg-zinc-50">
 			<div className="mx-auto max-w-2xl px-4 pb-32 pt-8">
 				{/* Header */}
-				<div className="mb-6 flex items-start gap-4">
-					<Link href={"/products"}>
-						<ArrowLeftIcon />
-					</Link>
+				<div className="mb-6 flex items-start justify-between gap-4">
+					<div className="flex items-start gap-4">
+						<Link
+							href={"/products"}
+							className="mt-0.5 text-zinc-500 hover:text-zinc-800 transition"
+						>
+							<ArrowLeftIcon size={20} />
+						</Link>
 
-					<div>
-						<h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-							Buy Products
-						</h1>
-						<p className="mt-0.5 text-sm text-zinc-500">
-							{products.length} item{products.length !== 1 ? "s" : ""} available
-						</p>
+						<div>
+							<h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+								Buy Products
+							</h1>
+							<p className="mt-0.5 text-sm text-zinc-500">
+								{products.length} item{products.length !== 1 ? "s" : ""}{" "}
+								available
+							</p>
+						</div>
 					</div>
+
+					<Link
+						href="/transactions"
+						className="shrink-0 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-600 transition hover:border-zinc-300 hover:text-zinc-900"
+					>
+						Transactions
+					</Link>
 				</div>
 
 				{/* Search */}
