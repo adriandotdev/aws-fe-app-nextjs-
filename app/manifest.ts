@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: "Product Manager",
-		short_name: "PWA Product Manager",
+		name: "Suki",
+		short_name: "Suki",
 		description: "A Progressive Web App built with Next.js",
 		start_url: "/",
 		display: "standalone",
