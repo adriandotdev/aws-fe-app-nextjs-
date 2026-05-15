@@ -170,12 +170,12 @@ export default function BuyPage() {
 
 	if (checkedOut) {
 		return (
-			<div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-zinc-50 px-6 text-center">
+			<div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-[#FBF8E9] px-6 text-center">
 				<div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
 					<CheckCircle2 size={32} className="text-green-600" />
 				</div>
-				<h2 className="text-xl font-semibold text-zinc-900">Sale recorded!</h2>
-				<p className="max-w-xs text-sm text-zinc-500">
+				<h2 className="text-xl font-semibold text-blue-950">Sale recorded!</h2>
+				<p className="max-w-xs text-sm text-[#2C5F14]/60">
 					Transaction saved. Ready for the next customer!
 				</p>
 				<button
@@ -183,7 +183,7 @@ export default function BuyPage() {
 						console.log(filtered);
 						setCheckedOut(false);
 					}}
-					className="mt-2 rounded-xl bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition active:scale-95"
+					className="mt-2 rounded-xl bg-[#2C5F14] px-6 py-3 text-sm font-medium text-[#F5C012] transition hover:bg-[#245010] active:scale-95"
 				>
 					New sale
 				</button>
@@ -192,23 +192,23 @@ export default function BuyPage() {
 	}
 
 	return (
-		<div className="h-dvh overflow-y-auto bg-zinc-50">
+		<div className="h-dvh overflow-y-auto bg-[#FBF8E9]">
 			<div className="mx-auto max-w-2xl px-4 pb-32 pt-8">
 				{/* Header */}
 				<div className="mb-6 flex items-start justify-between gap-4">
 					<div className="flex items-start gap-4">
 						<Link
 							href={"/products"}
-							className="mt-0.5 text-zinc-500 hover:text-zinc-800 transition"
+							className="mt-0.5 text-[#2C5F14]/50 hover:text-[#2C5F14] transition"
 						>
 							<ArrowLeftIcon size={20} />
 						</Link>
 
 						<div>
-							<h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+							<h1 className="text-2xl font-semibold tracking-tight text-blue-950">
 								Buy Products
 							</h1>
-							<p className="mt-0.5 text-sm text-zinc-500">
+							<p className="mt-0.5 text-sm text-[#2C5F14]/60">
 								{products.length} item{products.length !== 1 ? "s" : ""}{" "}
 								available
 							</p>
@@ -217,7 +217,7 @@ export default function BuyPage() {
 
 					<Link
 						href="/transactions"
-						className="shrink-0 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-600 transition hover:border-zinc-300 hover:text-zinc-900"
+						className="shrink-0 rounded-lg border border-[#2C5F14]/20 bg-[#FBF8E9] px-3 py-2 text-sm font-medium text-[#2C5F14] transition hover:border-[#2C5F14]/40"
 					>
 						Transactions
 					</Link>
@@ -227,14 +227,14 @@ export default function BuyPage() {
 				<div className="relative mb-4">
 					<Search
 						size={15}
-						className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"
+						className="absolute left-3 top-1/2 -translate-y-1/2 text-[#2C5F14]/40"
 					/>
 					<input
 						type="text"
 						placeholder="Search products…"
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
-						className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-9 pr-4 text-sm text-zinc-800 outline-none placeholder:text-zinc-400 focus:border-zinc-400 focus:ring-0"
+						className="w-full rounded-xl border border-[#2C5F14]/15 bg-white/60 py-2.5 pl-9 pr-4 text-sm text-blue-950 outline-none placeholder:text-[#2C5F14]/30 focus:border-[#2C5F14]/40 focus:ring-2 focus:ring-[#2C5F14]/10"
 					/>
 				</div>
 
@@ -246,8 +246,8 @@ export default function BuyPage() {
 							onClick={() => setActiveCategory(cat)}
 							className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
 								activeCategory === cat
-									? "bg-zinc-900 text-white"
-									: "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300"
+									? "bg-[#2C5F14] text-[#F5C012]"
+									: "bg-[#FBF8E9] border border-[#2C5F14]/15 text-[#2C5F14]/70 hover:border-[#2C5F14]/30"
 							}`}
 						>
 							{cat}
@@ -268,20 +268,20 @@ export default function BuyPage() {
 						{[1, 2, 3].map((i) => (
 							<div
 								key={i}
-								className="h-20 animate-pulse rounded-xl bg-zinc-200"
+								className="h-20 animate-pulse rounded-xl bg-[#2C5F14]/10"
 							/>
 						))}
 					</div>
 				) : filtered.length === 0 ? (
 					<div className="py-20 text-center">
-						<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100">
+						<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#2C5F14]/10">
 							<PackageOpen
 								size={20}
 								strokeWidth={1.5}
-								className="text-zinc-400"
+								className="text-[#2C5F14]/40"
 							/>
 						</div>
-						<p className="text-sm text-zinc-400">No products found.</p>
+						<p className="text-sm text-[#2C5F14]/50">No products found.</p>
 					</div>
 				) : (
 					<ul className="flex flex-col gap-3 overflow-hidden">
@@ -296,11 +296,11 @@ export default function BuyPage() {
 										animate={{ opacity: 1, y: 0 }}
 										exit={{ opacity: 0, x: 100 }}
 										transition={{ duration: 0.2 }}
-										className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-3.5 shadow-sm"
+										className="flex items-center gap-3 rounded-xl border border-[#2C5F14]/15 bg-[#FBF8E9] px-4 py-3.5 shadow-sm"
 									>
 										{/* Info */}
 										<div className="min-w-0 flex-1">
-											<p className="truncate text-sm font-medium text-zinc-900">
+											<p className="truncate text-sm font-medium text-blue-950">
 												{product.name}
 											</p>
 											<span
@@ -311,7 +311,7 @@ export default function BuyPage() {
 										</div>
 
 										{/* Price */}
-										<p className="shrink-0 text-base font-semibold text-zinc-900">
+										<p className="shrink-0 text-base font-semibold text-blue-950">
 											₱{product.sellingPrice?.toFixed(2)}
 										</p>
 
@@ -322,18 +322,18 @@ export default function BuyPage() {
 													onClick={() =>
 														dispatch({ type: "DECREMENT", id: product.id })
 													}
-													className="flex h-7 w-7 items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 transition hover:bg-zinc-100"
+													className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#2C5F14]/15 text-[#2C5F14] transition hover:bg-[#2C5F14]/10"
 												>
 													<Minus size={13} />
 												</button>
-												<span className="w-5 text-center text-sm font-semibold text-zinc-900">
+												<span className="w-5 text-center text-sm font-semibold text-blue-950">
 													{inCart.qty}
 												</span>
 												<button
 													onClick={() =>
 														dispatch({ type: "INCREMENT", id: product.id })
 													}
-													className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 text-white transition hover:bg-zinc-700"
+													className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#2C5F14] text-[#F5C012] transition hover:bg-[#245010]"
 												>
 													<Plus size={13} />
 												</button>
@@ -341,7 +341,7 @@ export default function BuyPage() {
 										) : (
 											<button
 												onClick={() => dispatch({ type: "ADD", product })}
-												className="shrink-0 flex items-center gap-1 rounded-lg bg-zinc-900 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-zinc-700 active:scale-95"
+												className="shrink-0 flex items-center gap-1 rounded-lg bg-[#2C5F14] px-3 py-1.5 text-xs font-medium text-[#F5C012] transition hover:bg-[#245010] active:scale-95"
 											>
 												<Plus size={12} strokeWidth={2.5} />
 												Add
@@ -364,7 +364,7 @@ export default function BuyPage() {
 						exit={{ opacity: 0, y: 20 }}
 						transition={{ duration: 0.22, ease: "easeIn" }}
 						onClick={() => setCartOpen(true)}
-						className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl bg-zinc-900 px-5 py-3.5 shadow-xl text-white transition active:scale-95"
+						className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl bg-[#2C5F14] px-5 py-3.5 shadow-xl shadow-[#2C5F14]/30 text-[#F5C012] transition active:scale-95"
 					>
 						<ShoppingCart size={18} />
 						<span className="text-sm font-medium">
@@ -396,19 +396,19 @@ export default function BuyPage() {
 							animate={{ y: 0 }}
 							exit={{ y: "100%" }}
 							transition={{ type: "spring", damping: 28, stiffness: 300 }}
-							className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-2xl rounded-t-2xl bg-white px-4 pb-10 pt-4 shadow-2xl"
+							className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-2xl rounded-t-2xl bg-[#FBF8E9] px-4 pb-10 pt-4 shadow-2xl"
 						>
 							{/* Handle */}
-							<div className="mx-auto mb-4 h-1 w-10 rounded-full bg-zinc-200" />
+							<div className="mx-auto mb-4 h-1 w-10 rounded-full bg-[#2C5F14]/20" />
 
 							{/* Title row */}
 							<div className="mb-4 flex items-center justify-between">
-								<h2 className="text-base font-semibold text-zinc-900">
+								<h2 className="text-base font-semibold text-blue-950">
 									Cart · {cartCount} item{cartCount !== 1 ? "s" : ""}
 								</h2>
 								<button
 									onClick={onCartClose}
-									className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100"
+									className="rounded-lg p-1.5 text-[#2C5F14]/40 hover:bg-[#2C5F14]/10"
 								>
 									<X size={16} />
 								</button>
@@ -419,13 +419,13 @@ export default function BuyPage() {
 								{cart.map((item) => (
 									<li
 										key={item.id}
-										className="flex items-center gap-3 rounded-xl border border-zinc-100 bg-zinc-50 px-3 py-2.5"
+										className="flex items-center gap-3 rounded-xl border border-[#2C5F14]/10 bg-[#FBF8E9]/60 px-3 py-2.5"
 									>
 										<div className="min-w-0 flex-1">
-											<p className="truncate text-sm font-medium text-zinc-900">
+											<p className="truncate text-sm font-medium text-blue-950">
 												{item.name}
 											</p>
-											<p className="text-xs text-zinc-400">
+											<p className="text-xs text-[#2C5F14]/50">
 												₱{item.sellingPrice.toFixed(2)} each
 											</p>
 										</div>
@@ -437,30 +437,30 @@ export default function BuyPage() {
 													console.log(cart);
 													if (cart.length === 0) onCartClose();
 												}}
-												className="flex h-6 w-6 items-center justify-center rounded-md border border-zinc-200 text-zinc-600 hover:bg-zinc-100"
+												className="flex h-6 w-6 items-center justify-center rounded-md border border-[#2C5F14]/15 text-[#2C5F14] hover:bg-[#2C5F14]/10"
 											>
 												<Minus size={11} />
 											</button>
-											<span className="w-5 text-center text-sm font-semibold text-zinc-900">
+											<span className="w-5 text-center text-sm font-semibold text-blue-950">
 												{item.qty}
 											</span>
 											<button
 												onClick={() =>
 													dispatch({ type: "INCREMENT", id: item.id })
 												}
-												className="flex h-6 w-6 items-center justify-center rounded-md bg-zinc-900 text-white hover:bg-zinc-700"
+												className="flex h-6 w-6 items-center justify-center rounded-md bg-[#2C5F14] text-[#F5C012] hover:bg-[#245010]"
 											>
 												<Plus size={11} />
 											</button>
 										</div>
 
-										<p className="shrink-0 w-16 text-right text-sm font-semibold text-zinc-900">
+										<p className="shrink-0 w-16 text-right text-sm font-semibold text-blue-950">
 											₱{(item.sellingPrice * item.qty).toFixed(2)}
 										</p>
 
 										<button
 											onClick={() => dispatch({ type: "REMOVE", id: item.id })}
-											className="shrink-0 rounded-md p-1 text-zinc-300 hover:text-red-500"
+											className="shrink-0 rounded-md p-1 text-[#2C5F14]/30 hover:text-red-500"
 										>
 											<Trash2 size={14} />
 										</button>
@@ -469,18 +469,18 @@ export default function BuyPage() {
 							</ul>
 
 							{/* Total */}
-							<div className="mb-4 flex items-center justify-between border-t border-zinc-100 pt-4">
-								<span className="text-sm text-zinc-500">Total</span>
-								<span className="text-xl font-bold text-zinc-900">
+							<div className="mb-4 flex items-center justify-between border-t border-[#2C5F14]/10 pt-4">
+								<span className="text-sm text-[#2C5F14]/60">Total</span>
+								<span className="text-xl font-bold text-blue-950">
 									₱{cartTotal.toFixed(2)}
 								</span>
 							</div>
 
 							<div className="relative my-4">
-								<label className="mb-1.5 block text-xs font-medium text-zinc-500">
+								<label className="mb-1.5 block text-xs font-medium text-[#2C5F14]/60">
 									Amount paid
 								</label>
-								<span className="absolute left-3 bottom-0 flex h-[42px] items-center text-sm text-zinc-400">
+								<span className="absolute left-3 bottom-0 flex h-[42px] items-center text-sm text-[#2C5F14]/40">
 									₱
 								</span>
 								<input
@@ -490,13 +490,13 @@ export default function BuyPage() {
 									onChange={(e) => setAmountPaid(e.target.value)}
 									step="0.01"
 									placeholder="0.00"
-									className="w-full rounded-lg border border-zinc-200 py-2.5 pl-7 pr-3 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition focus:border-zinc-400 focus:ring-2 focus:ring-zinc-900/10"
+									className="w-full rounded-lg border border-[#2C5F14]/15 bg-white/60 py-2.5 pl-7 pr-3 text-sm text-blue-950 placeholder-[#2C5F14]/30 outline-none transition focus:border-[#2C5F14]/40 focus:ring-2 focus:ring-[#2C5F14]/10"
 								/>
 							</div>
 
-							<div className="mb-4 flex items-center justify-between border-t border-zinc-100 pt-4">
-								<span className="text-sm text-zinc-500">Change</span>
-								<span className="text-xl font-bold text-zinc-900">
+							<div className="mb-4 flex items-center justify-between border-t border-[#2C5F14]/10 pt-4">
+								<span className="text-sm text-[#2C5F14]/60">Change</span>
+								<span className="text-xl font-bold text-blue-950">
 									₱
 									{+amountPaid >= cartTotal
 										? Math.abs(cartTotal - +amountPaid).toFixed(2)
@@ -508,7 +508,7 @@ export default function BuyPage() {
 							<button
 								disabled={+amountPaid < cartTotal || creatingTransaction}
 								onClick={handleCheckout}
-								className="w-full rounded-2xl bg-zinc-900 py-4 text-base font-semibold text-white transition active:scale-95 hover:bg-zinc-700 disabled:bg-zinc-200"
+								className="w-full rounded-2xl bg-[#2C5F14] py-4 text-base font-semibold text-[#F5C012] transition active:scale-95 hover:bg-[#245010] disabled:bg-[#2C5F14]/20 disabled:text-[#2C5F14]/40"
 							>
 								{creatingTransaction ? "Checking out..." : "Checkout"}
 							</button>
