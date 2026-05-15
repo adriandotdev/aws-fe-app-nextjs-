@@ -54,28 +54,28 @@ export function TransactionClientPage() {
 
 	if (auth.isLoading || !auth.isAuthenticated) {
 		return (
-			<div className="flex min-h-dvh items-center justify-center bg-zinc-50">
-				<p className="text-sm text-zinc-400">Loading…</p>
+			<div className="flex min-h-dvh items-center justify-center bg-[#FBF8E9]">
+				<p className="text-sm text-[#2C5F14]/40">Loading…</p>
 			</div>
 		);
 	}
 
 	return (
-		<div className="h-dvh overflow-y-auto bg-zinc-50">
+		<div className="h-dvh overflow-y-auto bg-[#FBF8E9]">
 			<div className="mx-auto max-w-2xl px-4 pb-16 pt-8">
 				{/* Header */}
 				<div className="mb-6 flex items-start gap-4">
 					<Link
 						href="/products/buy"
-						className="mt-0.5 text-zinc-500 hover:text-zinc-800 transition"
+						className="mt-0.5 text-[#2C5F14]/60 hover:text-blue-950 transition"
 					>
 						<ArrowLeftIcon size={20} />
 					</Link>
 					<div>
-						<h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+						<h1 className="text-2xl font-semibold tracking-tight text-blue-950">
 							Transactions
 						</h1>
-						<p className="mt-0.5 text-sm text-zinc-500">
+						<p className="mt-0.5 text-sm text-[#2C5F14]/60">
 							{loading
 								? "Loading…"
 								: `${transactions.length} record${transactions.length !== 1 ? "s" : ""}`}
@@ -103,20 +103,20 @@ export function TransactionClientPage() {
 						{[1, 2, 3].map((i) => (
 							<div
 								key={i}
-								className="h-20 animate-pulse rounded-xl bg-zinc-200"
+								className="h-20 animate-pulse rounded-xl bg-[#2C5F14]/10"
 							/>
 						))}
 					</div>
 				) : transactions.length === 0 ? (
 					<div className="py-20 text-center">
-						<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100">
+						<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#2C5F14]/10">
 							<ReceiptText
 								size={20}
 								strokeWidth={1.5}
-								className="text-zinc-400"
+								className="text-[#2C5F14]/40"
 							/>
 						</div>
-						<p className="text-sm text-zinc-400">No transactions yet.</p>
+						<p className="text-sm text-[#2C5F14]/40">No transactions yet.</p>
 					</div>
 				) : (
 					<ul className="flex flex-col gap-3">
