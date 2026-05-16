@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Search, ShoppingCart } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { AddProductModal } from "./AddProductModal";
@@ -289,13 +289,13 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 			<LogoutModal logout={logout} onClose={closeLogout} onLogout={onSignOut} />
 
 			{/* Buy FAB */}
-			<button
+			{/* <button
 				onClick={() => router.push("/products/buy")}
 				className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-[#2C5F14] px-5 py-3.5 text-sm font-semibold text-[#F5C012] shadow-lg shadow-[#2C5F14]/30 transition hover:bg-[#245010] active:scale-95 touch-manipulation"
 			>
 				<ShoppingCart size={16} strokeWidth={2.5} />
 				Buy
-			</button>
+			</button> */}
 		</div>
 	);
 }

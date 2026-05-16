@@ -359,12 +359,12 @@ export default function BuyPage() {
 			<AnimatePresence>
 				{cartCount > 0 && !cartOpen && (
 					<motion.button
-						initial={{ opacity: 0, y: 20 }}
+						initial={{ opacity: 0, y: 96 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: 20 }}
 						transition={{ duration: 0.22, ease: "easeIn" }}
 						onClick={() => setCartOpen(true)}
-						className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl bg-[#2C5F14] px-5 py-3.5 shadow-xl shadow-[#2C5F14]/30 text-[#F5C012] transition active:scale-95"
+						className="fixed bottom-24 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl bg-[#2C5F14] px-5 py-3.5 shadow-xl shadow-[#2C5F14]/30 text-[#F5C012] transition active:scale-95"
 					>
 						<ShoppingCart size={18} />
 						<span className="text-sm font-medium">

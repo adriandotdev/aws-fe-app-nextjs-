@@ -1,14 +1,11 @@
 "use client";
 
-import {
-	Transaction,
-	TransactionCard,
-} from "@/app/(tabs)/transactions/_components/TransactionCard";
 import { ArrowLeftIcon, ReceiptText } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "react-oidc-context";
+import { Transaction, TransactionCard } from "./TransactionCard";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
