@@ -1,6 +1,7 @@
 "use client";
 
 import { MoreVertical, Smartphone } from "lucide-react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -43,31 +44,54 @@ export default function Home() {
 	}
 
 	return (
-		<div className="flex h-dvh flex-col bg-[#FBF8E9] px-6">
+		<div className="flex h-dvh flex-col bg-[#FBF8E9] px-6 overflow-hidden">
 			{/* Top section — logo & copy */}
 			<div className="flex flex-1 flex-col items-center justify-center text-center">
-				<Image
-					src={"/suki-bg.png"}
-					width={100}
-					height={100}
-					alt="App logo"
-					priority
-				/>
-				<h1 className="font-akaya text-8xl text-blue-950">Suki</h1>
-				<p className="text-sm font-semibold font-sans max-w-md text-[#2C5F14]">
+				<motion.div
+					initial={{ opacity: 0, scale: 0.6 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.5, ease: "easeOut" }}
+				>
+					<Image
+						src={"/suki-bg.png"}
+						width={100}
+						height={100}
+						alt="App logo"
+						priority
+					/>
+				</motion.div>
+				<motion.h1
+					className="font-akaya text-8xl text-blue-950"
+					initial={{ opacity: 0, y: 24 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
+				>
+					Suki
+				</motion.h1>
+				<motion.p
+					className="text-sm font-semibold font-sans max-w-md text-[#2C5F14]"
+					initial={{ opacity: 0, y: 16 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, delay: 0.25, ease: "easeOut" }}
+				>
 					I-stock. I-track. Kumita.
-				</p>
+				</motion.p>
 			</div>
 
 			{/* Bottom section — CTA */}
-			<div className="pb-10 pt-6">
+			<motion.div
+				className="pb-10 pt-6"
+				initial={{ opacity: 0, y: 32 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+			>
 				<button
 					onClick={() => auth.signinRedirect()}
 					className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#2C5F14] px-4 py-4 text-base font-semibold text-white transition active:scale-95"
 				>
 					Sign In
 				</button>
-			</div>
+			</motion.div>
 
 			{/* ⋯ overflow menu — top right */}
 			{!isStandalone && (
