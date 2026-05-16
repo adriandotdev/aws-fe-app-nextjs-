@@ -171,22 +171,42 @@ export default function BuyPage() {
 	if (checkedOut) {
 		return (
 			<div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-[#FBF8E9] px-6 text-center">
-				<div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+				<motion.div
+					initial={{ scale: 0, opacity: 0 }}
+					animate={{ scale: 1, opacity: 1 }}
+					transition={{ type: "spring", stiffness: 260, damping: 20 }}
+					className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100"
+				>
 					<CheckCircle2 size={32} className="text-green-600" />
-				</div>
-				<h2 className="text-xl font-semibold text-blue-950">Sale recorded!</h2>
-				<p className="max-w-xs text-sm text-[#2C5F14]/60">
+				</motion.div>
+				<motion.h2
+					className="text-xl font-semibold text-blue-950"
+					initial={{ opacity: 0, y: 12 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: 0.15, duration: 0.35, ease: "easeOut" }}
+				>
+					Sale recorded!
+				</motion.h2>
+				<motion.p
+					className="max-w-xs text-sm text-[#2C5F14]/60"
+					initial={{ opacity: 0, y: 8 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: 0.25, duration: 0.35, ease: "easeOut" }}
+				>
 					Transaction saved. Ready for the next customer!
-				</p>
-				<button
+				</motion.p>
+				<motion.button
 					onClick={() => {
 						console.log(filtered);
 						setCheckedOut(false);
 					}}
 					className="mt-2 rounded-xl bg-[#2C5F14] px-6 py-3 text-sm font-medium text-[#F5C012] transition hover:bg-[#245010] active:scale-95"
+					initial={{ opacity: 0, y: 8 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: 0.35, duration: 0.35, ease: "easeOut" }}
 				>
 					New sale
-				</button>
+				</motion.button>
 			</div>
 		);
 	}
