@@ -1,7 +1,6 @@
 "use client";
 
-import { ArrowLeftIcon, ReceiptText } from "lucide-react";
-import Link from "next/link";
+import { ReceiptText } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "react-oidc-context";
@@ -65,12 +64,6 @@ export function TransactionClientPage() {
 			<div className="mx-auto max-w-2xl px-4 pb-16 pt-8">
 				{/* Header */}
 				<div className="mb-6 flex items-start gap-4">
-					<Link
-						href="/products/buy"
-						className="mt-0.5 text-[#2C5F14]/60 hover:text-blue-950 transition"
-					>
-						<ArrowLeftIcon size={20} />
-					</Link>
 					<div>
 						<h1 className="text-2xl font-semibold tracking-tight text-blue-950">
 							Transactions

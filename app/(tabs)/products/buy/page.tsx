@@ -2,7 +2,6 @@
 
 import { CATEGORIES, categoryColor } from "@/app/utils/categories";
 import {
-	ArrowLeftIcon,
 	CheckCircle2,
 	Minus,
 	PackageOpen,
@@ -13,7 +12,6 @@ import {
 	X,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { useAuth } from "react-oidc-context";
@@ -217,13 +215,6 @@ export default function BuyPage() {
 				{/* Header */}
 				<div className="mb-6 flex items-start justify-between gap-4">
 					<div className="flex items-start gap-4">
-						<Link
-							href={"/products"}
-							className="mt-0.5 text-[#2C5F14]/50 hover:text-[#2C5F14] transition"
-						>
-							<ArrowLeftIcon size={20} />
-						</Link>
-
 						<div>
 							<h1 className="text-2xl font-semibold tracking-tight text-blue-950">
 								Buy Products
@@ -234,13 +225,6 @@ export default function BuyPage() {
 							</p>
 						</div>
 					</div>
-
-					<Link
-						href="/transactions"
-						className="shrink-0 rounded-lg border border-[#2C5F14]/20 bg-[#FBF8E9] px-3 py-2 text-sm font-medium text-[#2C5F14] transition hover:border-[#2C5F14]/40"
-					>
-						Transactions
-					</Link>
 				</div>
 
 				{/* Search */}

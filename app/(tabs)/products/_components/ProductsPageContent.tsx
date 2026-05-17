@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Search } from "lucide-react";
+import { LogOutIcon, Plus, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { AddProductModal } from "./AddProductModal";
@@ -201,9 +201,9 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 						</button>
 						<button
 							onClick={openLogout}
-							className="rounded-lg border border-[#2C5F14]/20 bg-[#FBF8E9] px-3 py-2 text-sm font-medium text-[#2C5F14] transition hover:border-[#2C5F14]/40"
+							className="rounded-lg bg-[#FBF8E9] px-3 py-2 text-sm font-medium text-[#2C5F14] transition hover:border-[#2C5F14]/40"
 						>
-							Sign out
+							<LogOutIcon />
 						</button>
 					</div>
 				</div>
