@@ -1,10 +1,12 @@
 "use client";
 
+import { AddProductModal } from "@/app/(tabs)/products/_components/AddProductModal";
 import { CATEGORIES, categoryColor } from "@/app/utils/categories";
 import {
 	CheckCircle2,
 	Minus,
 	PackageOpen,
+	PackagePlus,
 	Plus,
 	Search,
 	ShoppingCart,
@@ -77,6 +79,13 @@ export default function BuyPage() {
 	const [checkedOut, setCheckedOut] = useState(false);
 	const [amountPaid, setAmountPaid] = useState("");
 	const [creatingTransaction, setCreatingTransaction] = useState(false);
+	const [showAddProduct, setShowAddProduct] = useState(false);
+	const [addForm, setAddForm] = useState({
+		name: "",
+		category: "Others",
+		sellingPrice: "",
+	});
+	const [creatingProduct, setCreatingProduct] = useState(false);
 
 	const onCartClose = () => {
 		setCartOpen(false);
@@ -166,6 +175,39 @@ export default function BuyPage() {
 	const cartTotal = cart.reduce((sum, i) => sum + i.sellingPrice * i.qty, 0);
 	const cartCount = cart.reduce((sum, i) => sum + i.qty, 0);
 
+	const isAddFormValid =
+		addForm.name.trim() !== "" &&
+		addForm.category.trim() !== "" &&
+		addForm.sellingPrice !== "" &&
+		!isNaN(parseFloat(addForm.sellingPrice)) &&
+		parseFloat(addForm.sellingPrice) >= 0;
+
+	async function createProduct(e: React.FormEvent) {
+		e.preventDefault();
+		const name = addForm.name.trim();
+		const category = addForm.category.trim();
+		const sellingPrice = parseFloat(addForm.sellingPrice);
+		if (!name || !category || isNaN(sellingPrice) || sellingPrice < 0) return;
+		setCreatingProduct(true);
+		try {
+			const res = await fetch(`${API_BASE}/products`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ name, category, sellingPrice }),
+			});
+			if (!res.ok) throw new Error();
+			const created = await res.json();
+			const product: Product = created?.product ?? created;
+			setProducts((prev) => [product, ...prev]);
+			setAddForm({ name: "", category: "Others", sellingPrice: "" });
+			setShowAddProduct(false);
+		} catch {
+			setError("Failed to create product.");
+		} finally {
+			setCreatingProduct(false);
+		}
+	}
+
 	async function handleCheckout(e: React.MouseEvent) {
 		await createNewTransaction(e);
 		setCheckedOut(true);
@@ -217,11 +259,11 @@ export default function BuyPage() {
 	}
 
 	return (
-		<div className="h-dvh overflow-y-auto bg-[#FBF8E9]">
-			<div className="mx-auto max-w-2xl px-4 pb-32 pt-8">
-				{/* Header */}
-				<div className="mb-6 flex items-start justify-between gap-4">
-					<div className="flex items-start gap-4">
+		<>
+			<div className="h-dvh overflow-y-auto bg-[#FBF8E9]">
+				<div className="mx-auto max-w-2xl px-4 pb-32 pt-8">
+					{/* Header */}
+					<div className="mb-6 flex items-start justify-between gap-4">
 						<div>
 							<h1 className="text-2xl font-semibold tracking-tight text-blue-950">
 								Buy Products
@@ -231,302 +273,328 @@ export default function BuyPage() {
 								available
 							</p>
 						</div>
-					</div>
-				</div>
-
-				{/* Search */}
-				<div className="relative mb-4">
-					<Search
-						size={15}
-						className="absolute left-3 top-1/2 -translate-y-1/2 text-[#2C5F14]/40"
-					/>
-					<input
-						type="text"
-						placeholder="Search products…"
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
-						className="w-full rounded-xl border border-[#2C5F14]/15 bg-white/60 py-2.5 pl-9 pr-4 text-sm text-blue-950 outline-none placeholder:text-[#2C5F14]/30 focus:border-[#2C5F14]/40 focus:ring-2 focus:ring-[#2C5F14]/10"
-					/>
-				</div>
-
-				{/* Category tabs */}
-				<div className="mb-6 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-					{usedCategories.map((cat) => (
 						<button
-							key={cat}
-							onClick={() => setActiveCategory(cat)}
-							className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
-								activeCategory === cat
-									? "bg-[#2C5F14] text-[#F5C012]"
-									: "bg-[#FBF8E9] border border-[#2C5F14]/15 text-[#2C5F14]/70 hover:border-[#2C5F14]/30"
-							}`}
+							onClick={() => setShowAddProduct(true)}
+							className="flex shrink-0 items-center gap-1.5 rounded-xl border border-[#2C5F14]/20 bg-[#FBF8E9] px-3 py-2 text-xs font-medium text-[#2C5F14] transition hover:border-[#2C5F14]/40 hover:bg-[#2C5F14]/5 active:scale-95"
 						>
-							{cat}
+							<PackagePlus size={14} />
+							New Product
 						</button>
-					))}
-				</div>
+					</div>
 
-				{/* Error */}
-				{error && (
-					<p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
-						{error}
-					</p>
-				)}
+					{/* Search */}
+					<div className="relative mb-4">
+						<Search
+							size={15}
+							className="absolute left-3 top-1/2 -translate-y-1/2 text-[#2C5F14]/40"
+						/>
+						<input
+							type="text"
+							placeholder="Search products…"
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							className="w-full rounded-xl border border-[#2C5F14]/15 bg-white/60 py-2.5 pl-9 pr-4 text-sm text-blue-950 outline-none placeholder:text-[#2C5F14]/30 focus:border-[#2C5F14]/40 focus:ring-2 focus:ring-[#2C5F14]/10"
+						/>
+					</div>
 
-				{/* Product list */}
-				{loading ? (
-					<div className="flex flex-col gap-3">
-						{[1, 2, 3].map((i) => (
-							<div
-								key={i}
-								className="h-20 animate-pulse rounded-xl bg-[#2C5F14]/10"
-							/>
+					{/* Category tabs */}
+					<div className="mb-6 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+						{usedCategories.map((cat) => (
+							<button
+								key={cat}
+								onClick={() => setActiveCategory(cat)}
+								className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
+									activeCategory === cat
+										? "bg-[#2C5F14] text-[#F5C012]"
+										: "bg-[#FBF8E9] border border-[#2C5F14]/15 text-[#2C5F14]/70 hover:border-[#2C5F14]/30"
+								}`}
+							>
+								{cat}
+							</button>
 						))}
 					</div>
-				) : filtered.length === 0 ? (
-					<div className="py-20 text-center">
-						<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#2C5F14]/10">
-							<PackageOpen
-								size={20}
-								strokeWidth={1.5}
-								className="text-[#2C5F14]/40"
-							/>
+
+					{/* Error */}
+					{error && (
+						<p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+							{error}
+						</p>
+					)}
+
+					{/* Product list */}
+					{loading ? (
+						<div className="flex flex-col gap-3">
+							{[1, 2, 3].map((i) => (
+								<div
+									key={i}
+									className="h-20 animate-pulse rounded-xl bg-[#2C5F14]/10"
+								/>
+							))}
 						</div>
-						<p className="text-sm text-[#2C5F14]/50">No products found.</p>
-					</div>
-				) : (
-					<ul className="flex flex-col gap-3 overflow-hidden">
-						<AnimatePresence mode="popLayout">
-							{filtered.map((product) => {
-								const inCart = cart.find((i) => i.id === product.id);
-								return (
-									<motion.li
-										key={product.id}
-										layout
-										initial={{ opacity: 0, y: -10 }}
-										animate={{ opacity: 1, y: 0 }}
-										exit={{ opacity: 0, x: 100 }}
-										transition={{ duration: 0.2 }}
-										className="flex items-center gap-3 rounded-xl border border-[#2C5F14]/15 bg-[#FBF8E9] px-4 py-3.5 shadow-sm"
-									>
-										{/* Info */}
-										<div className="min-w-0 flex-1">
-											<p className="truncate text-sm font-medium text-blue-950">
-												{product.name}
+					) : filtered.length === 0 ? (
+						<div className="py-20 text-center">
+							<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#2C5F14]/10">
+								<PackageOpen
+									size={20}
+									strokeWidth={1.5}
+									className="text-[#2C5F14]/40"
+								/>
+							</div>
+							<p className="text-sm text-[#2C5F14]/50">No products found.</p>
+							<button
+								onClick={() => setShowAddProduct(true)}
+								className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#2C5F14] px-4 py-2 text-xs font-medium text-[#F5C012] transition hover:bg-[#245010] active:scale-95"
+							>
+								<Plus size={13} strokeWidth={2.5} />
+								Add Product
+							</button>
+						</div>
+					) : (
+						<ul className="flex flex-col gap-3 overflow-hidden">
+							<AnimatePresence mode="popLayout">
+								{filtered.map((product) => {
+									const inCart = cart.find((i) => i.id === product.id);
+									return (
+										<motion.li
+											key={product.id}
+											layout
+											initial={{ opacity: 0, y: -10 }}
+											animate={{ opacity: 1, y: 0 }}
+											exit={{ opacity: 0, x: 100 }}
+											transition={{ duration: 0.2 }}
+											className="flex items-center gap-3 rounded-xl border border-[#2C5F14]/15 bg-[#FBF8E9] px-4 py-3.5 shadow-sm"
+										>
+											{/* Info */}
+											<div className="min-w-0 flex-1">
+												<p className="truncate text-sm font-medium text-blue-950">
+													{product.name}
+												</p>
+												<span
+													className={`mt-0.5 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${categoryColor(product.category)}`}
+												>
+													{product.category}
+												</span>
+											</div>
+
+											{/* Price */}
+											<p className="shrink-0 text-base font-semibold text-blue-950">
+												₱{product.sellingPrice?.toFixed(2)}
 											</p>
-											<span
-												className={`mt-0.5 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${categoryColor(product.category)}`}
-											>
-												{product.category}
-											</span>
-										</div>
 
-										{/* Price */}
-										<p className="shrink-0 text-base font-semibold text-blue-950">
-											₱{product.sellingPrice?.toFixed(2)}
-										</p>
+											{/* Cart controls */}
+											{inCart ? (
+												<div className="flex shrink-0 items-center gap-1">
+													<button
+														onClick={() =>
+															dispatch({ type: "DECREMENT", id: product.id })
+														}
+														className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#2C5F14]/15 text-[#2C5F14] transition hover:bg-[#2C5F14]/10"
+													>
+														<Minus size={13} />
+													</button>
+													<span className="w-5 text-center text-sm font-semibold text-blue-950">
+														{inCart.qty}
+													</span>
+													<button
+														onClick={() =>
+															dispatch({ type: "INCREMENT", id: product.id })
+														}
+														className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#2C5F14] text-[#F5C012] transition hover:bg-[#245010]"
+													>
+														<Plus size={13} />
+													</button>
+												</div>
+											) : (
+												<button
+													onClick={() => dispatch({ type: "ADD", product })}
+													className="shrink-0 flex items-center gap-1 rounded-lg bg-[#2C5F14] px-3 py-1.5 text-xs font-medium text-[#F5C012] transition hover:bg-[#245010] active:scale-95"
+												>
+													<Plus size={12} strokeWidth={2.5} />
+													Add
+												</button>
+											)}
+										</motion.li>
+									);
+								})}
+							</AnimatePresence>
+						</ul>
+					)}
+				</div>
 
-										{/* Cart controls */}
-										{inCart ? (
+				{/* Floating cart button */}
+				<AnimatePresence>
+					{cartCount > 0 && !cartOpen && (
+						<motion.button
+							initial={{ opacity: 0, y: 96 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: 20 }}
+							transition={{ duration: 0.22, ease: "easeIn" }}
+							onClick={() => setCartOpen(true)}
+							className="fixed bottom-24 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl bg-[#2C5F14] px-5 py-3.5 shadow-xl shadow-[#2C5F14]/30 text-[#F5C012] transition active:scale-95"
+						>
+							<ShoppingCart size={18} />
+							<span className="text-sm font-medium">
+								{cartCount} item{cartCount !== 1 ? "s" : ""}
+							</span>
+							<span className="text-sm font-semibold">
+								₱{cartTotal.toFixed(2)}
+							</span>
+						</motion.button>
+					)}
+				</AnimatePresence>
+
+				{/* Cart sheet */}
+				<AnimatePresence>
+					{cartOpen && (
+						<>
+							{/* Backdrop */}
+							<motion.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								onClick={onCartClose}
+								className="fixed inset-0 z-30 bg-black/40"
+							/>
+
+							{/* Sheet */}
+							<motion.div
+								initial={{ y: "100%" }}
+								animate={{ y: 0 }}
+								exit={{ y: "100%" }}
+								transition={{ type: "spring", damping: 28, stiffness: 300 }}
+								className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-2xl rounded-t-2xl bg-[#FBF8E9] px-4 pb-10 pt-4 shadow-2xl"
+							>
+								{/* Handle */}
+								<div className="mx-auto mb-4 h-1 w-10 rounded-full bg-[#2C5F14]/20" />
+
+								{/* Title row */}
+								<div className="mb-4 flex items-center justify-between">
+									<h2 className="text-base font-semibold text-blue-950">
+										Cart · {cartCount} item{cartCount !== 1 ? "s" : ""}
+									</h2>
+									<button
+										onClick={onCartClose}
+										className="rounded-lg p-1.5 text-[#2C5F14]/40 hover:bg-[#2C5F14]/10"
+									>
+										<X size={16} />
+									</button>
+								</div>
+
+								{/* Cart items */}
+								<ul className="mb-4 flex max-h-64 flex-col gap-2 overflow-y-auto">
+									{cart.map((item) => (
+										<li
+											key={item.id}
+											className="flex items-center gap-3 rounded-xl border border-[#2C5F14]/10 bg-[#FBF8E9]/60 px-3 py-2.5"
+										>
+											<div className="min-w-0 flex-1">
+												<p className="truncate text-sm font-medium text-blue-950">
+													{item.name}
+												</p>
+												<p className="text-xs text-[#2C5F14]/50">
+													₱{item.sellingPrice.toFixed(2)} each
+												</p>
+											</div>
+
 											<div className="flex shrink-0 items-center gap-1">
 												<button
-													onClick={() =>
-														dispatch({ type: "DECREMENT", id: product.id })
-													}
-													className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#2C5F14]/15 text-[#2C5F14] transition hover:bg-[#2C5F14]/10"
+													onClick={() => {
+														dispatch({ type: "DECREMENT", id: item.id });
+														console.log(cart);
+														if (cart.length === 0) onCartClose();
+													}}
+													className="flex h-6 w-6 items-center justify-center rounded-md border border-[#2C5F14]/15 text-[#2C5F14] hover:bg-[#2C5F14]/10"
 												>
-													<Minus size={13} />
+													<Minus size={11} />
 												</button>
 												<span className="w-5 text-center text-sm font-semibold text-blue-950">
-													{inCart.qty}
+													{item.qty}
 												</span>
 												<button
 													onClick={() =>
-														dispatch({ type: "INCREMENT", id: product.id })
+														dispatch({ type: "INCREMENT", id: item.id })
 													}
-													className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#2C5F14] text-[#F5C012] transition hover:bg-[#245010]"
+													className="flex h-6 w-6 items-center justify-center rounded-md bg-[#2C5F14] text-[#F5C012] hover:bg-[#245010]"
 												>
-													<Plus size={13} />
+													<Plus size={11} />
 												</button>
 											</div>
-										) : (
-											<button
-												onClick={() => dispatch({ type: "ADD", product })}
-												className="shrink-0 flex items-center gap-1 rounded-lg bg-[#2C5F14] px-3 py-1.5 text-xs font-medium text-[#F5C012] transition hover:bg-[#245010] active:scale-95"
-											>
-												<Plus size={12} strokeWidth={2.5} />
-												Add
-											</button>
-										)}
-									</motion.li>
-								);
-							})}
-						</AnimatePresence>
-					</ul>
-				)}
-			</div>
 
-			{/* Floating cart button */}
-			<AnimatePresence>
-				{cartCount > 0 && !cartOpen && (
-					<motion.button
-						initial={{ opacity: 0, y: 96 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: 20 }}
-						transition={{ duration: 0.22, ease: "easeIn" }}
-						onClick={() => setCartOpen(true)}
-						className="fixed bottom-24 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl bg-[#2C5F14] px-5 py-3.5 shadow-xl shadow-[#2C5F14]/30 text-[#F5C012] transition active:scale-95"
-					>
-						<ShoppingCart size={18} />
-						<span className="text-sm font-medium">
-							{cartCount} item{cartCount !== 1 ? "s" : ""}
-						</span>
-						<span className="text-sm font-semibold">
-							₱{cartTotal.toFixed(2)}
-						</span>
-					</motion.button>
-				)}
-			</AnimatePresence>
-
-			{/* Cart sheet */}
-			<AnimatePresence>
-				{cartOpen && (
-					<>
-						{/* Backdrop */}
-						<motion.div
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							onClick={onCartClose}
-							className="fixed inset-0 z-30 bg-black/40"
-						/>
-
-						{/* Sheet */}
-						<motion.div
-							initial={{ y: "100%" }}
-							animate={{ y: 0 }}
-							exit={{ y: "100%" }}
-							transition={{ type: "spring", damping: 28, stiffness: 300 }}
-							className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-2xl rounded-t-2xl bg-[#FBF8E9] px-4 pb-10 pt-4 shadow-2xl"
-						>
-							{/* Handle */}
-							<div className="mx-auto mb-4 h-1 w-10 rounded-full bg-[#2C5F14]/20" />
-
-							{/* Title row */}
-							<div className="mb-4 flex items-center justify-between">
-								<h2 className="text-base font-semibold text-blue-950">
-									Cart · {cartCount} item{cartCount !== 1 ? "s" : ""}
-								</h2>
-								<button
-									onClick={onCartClose}
-									className="rounded-lg p-1.5 text-[#2C5F14]/40 hover:bg-[#2C5F14]/10"
-								>
-									<X size={16} />
-								</button>
-							</div>
-
-							{/* Cart items */}
-							<ul className="mb-4 flex max-h-64 flex-col gap-2 overflow-y-auto">
-								{cart.map((item) => (
-									<li
-										key={item.id}
-										className="flex items-center gap-3 rounded-xl border border-[#2C5F14]/10 bg-[#FBF8E9]/60 px-3 py-2.5"
-									>
-										<div className="min-w-0 flex-1">
-											<p className="truncate text-sm font-medium text-blue-950">
-												{item.name}
+											<p className="shrink-0 w-16 text-right text-sm font-semibold text-blue-950">
+												₱{(item.sellingPrice * item.qty).toFixed(2)}
 											</p>
-											<p className="text-xs text-[#2C5F14]/50">
-												₱{item.sellingPrice.toFixed(2)} each
-											</p>
-										</div>
 
-										<div className="flex shrink-0 items-center gap-1">
-											<button
-												onClick={() => {
-													dispatch({ type: "DECREMENT", id: item.id });
-													console.log(cart);
-													if (cart.length === 0) onCartClose();
-												}}
-												className="flex h-6 w-6 items-center justify-center rounded-md border border-[#2C5F14]/15 text-[#2C5F14] hover:bg-[#2C5F14]/10"
-											>
-												<Minus size={11} />
-											</button>
-											<span className="w-5 text-center text-sm font-semibold text-blue-950">
-												{item.qty}
-											</span>
 											<button
 												onClick={() =>
-													dispatch({ type: "INCREMENT", id: item.id })
+													dispatch({ type: "REMOVE", id: item.id })
 												}
-												className="flex h-6 w-6 items-center justify-center rounded-md bg-[#2C5F14] text-[#F5C012] hover:bg-[#245010]"
+												className="shrink-0 rounded-md p-1 text-[#2C5F14]/30 hover:text-red-500"
 											>
-												<Plus size={11} />
+												<Trash2 size={14} />
 											</button>
-										</div>
+										</li>
+									))}
+								</ul>
 
-										<p className="shrink-0 w-16 text-right text-sm font-semibold text-blue-950">
-											₱{(item.sellingPrice * item.qty).toFixed(2)}
-										</p>
+								{/* Total */}
+								<div className="mb-4 flex items-center justify-between border-t border-[#2C5F14]/10 pt-4">
+									<span className="text-sm text-[#2C5F14]/60">Total</span>
+									<span className="text-xl font-bold text-blue-950">
+										₱{cartTotal.toFixed(2)}
+									</span>
+								</div>
 
-										<button
-											onClick={() => dispatch({ type: "REMOVE", id: item.id })}
-											className="shrink-0 rounded-md p-1 text-[#2C5F14]/30 hover:text-red-500"
-										>
-											<Trash2 size={14} />
-										</button>
-									</li>
-								))}
-							</ul>
+								<div className="relative my-4">
+									<label className="mb-1.5 block text-xs font-medium text-[#2C5F14]/60">
+										Amount paid
+									</label>
+									<span className="absolute left-3 bottom-0 flex h-[42px] items-center text-sm text-[#2C5F14]/40">
+										₱
+									</span>
+									<input
+										type="number"
+										min="0"
+										value={amountPaid}
+										onChange={(e) => setAmountPaid(e.target.value)}
+										step="0.01"
+										placeholder="0.00"
+										className="w-full rounded-lg border border-[#2C5F14]/15 bg-white/60 py-2.5 pl-7 pr-3 text-sm text-blue-950 placeholder-[#2C5F14]/30 outline-none transition focus:border-[#2C5F14]/40 focus:ring-2 focus:ring-[#2C5F14]/10"
+									/>
+								</div>
 
-							{/* Total */}
-							<div className="mb-4 flex items-center justify-between border-t border-[#2C5F14]/10 pt-4">
-								<span className="text-sm text-[#2C5F14]/60">Total</span>
-								<span className="text-xl font-bold text-blue-950">
-									₱{cartTotal.toFixed(2)}
-								</span>
-							</div>
+								<div className="mb-4 flex items-center justify-between border-t border-[#2C5F14]/10 pt-4">
+									<span className="text-sm text-[#2C5F14]/60">Change</span>
+									<span className="text-xl font-bold text-blue-950">
+										₱
+										{+amountPaid >= cartTotal
+											? Math.abs(cartTotal - +amountPaid).toFixed(2)
+											: 0}
+									</span>
+								</div>
 
-							<div className="relative my-4">
-								<label className="mb-1.5 block text-xs font-medium text-[#2C5F14]/60">
-									Amount paid
-								</label>
-								<span className="absolute left-3 bottom-0 flex h-[42px] items-center text-sm text-[#2C5F14]/40">
-									₱
-								</span>
-								<input
-									type="number"
-									min="0"
-									value={amountPaid}
-									onChange={(e) => setAmountPaid(e.target.value)}
-									step="0.01"
-									placeholder="0.00"
-									className="w-full rounded-lg border border-[#2C5F14]/15 bg-white/60 py-2.5 pl-7 pr-3 text-sm text-blue-950 placeholder-[#2C5F14]/30 outline-none transition focus:border-[#2C5F14]/40 focus:ring-2 focus:ring-[#2C5F14]/10"
-								/>
-							</div>
+								{/* Checkout button */}
+								<button
+									disabled={+amountPaid < cartTotal || creatingTransaction}
+									onClick={handleCheckout}
+									className="w-full rounded-2xl bg-[#2C5F14] py-4 text-base font-semibold text-[#F5C012] transition active:scale-95 hover:bg-[#245010] disabled:bg-[#2C5F14]/20 disabled:text-[#2C5F14]/40"
+								>
+									{creatingTransaction ? "Checking out..." : "Checkout"}
+								</button>
+							</motion.div>
+						</>
+					)}
+				</AnimatePresence>
+			</div>
 
-							<div className="mb-4 flex items-center justify-between border-t border-[#2C5F14]/10 pt-4">
-								<span className="text-sm text-[#2C5F14]/60">Change</span>
-								<span className="text-xl font-bold text-blue-950">
-									₱
-									{+amountPaid >= cartTotal
-										? Math.abs(cartTotal - +amountPaid).toFixed(2)
-										: 0}
-								</span>
-							</div>
-
-							{/* Checkout button */}
-							<button
-								disabled={+amountPaid < cartTotal || creatingTransaction}
-								onClick={handleCheckout}
-								className="w-full rounded-2xl bg-[#2C5F14] py-4 text-base font-semibold text-[#F5C012] transition active:scale-95 hover:bg-[#245010] disabled:bg-[#2C5F14]/20 disabled:text-[#2C5F14]/40"
-							>
-								{creatingTransaction ? "Checking out..." : "Checkout"}
-							</button>
-						</motion.div>
-					</>
-				)}
-			</AnimatePresence>
-		</div>
+			<AddProductModal
+				showForm={showAddProduct}
+				setShowForm={setShowAddProduct}
+				form={addForm}
+				setForm={setAddForm}
+				creating={creatingProduct}
+				isFormValid={!!isAddFormValid}
+				onSubmit={createProduct}
+			/>
+		</>
 	);
 }
