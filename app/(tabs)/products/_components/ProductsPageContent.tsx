@@ -1,7 +1,6 @@
 "use client";
 
 import { LogOutIcon, Plus, Search } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { AddProductModal } from "./AddProductModal";
 import { EditProductModal } from "./EditProductModal";
@@ -18,7 +17,6 @@ interface Product {
 }
 
 export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
-	const router = useRouter();
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [creating, setCreating] = useState(false);
@@ -41,11 +39,11 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 		sellingPrice: "",
 	});
 
-	const fetchProducts = useCallback(async () => {
+	const fetchProducts = useCallback(async (signal?: AbortSignal) => {
 		setLoading(true);
 		setError(null);
 		try {
-			const res = await fetch(`${API_BASE}/products`);
+			const res = await fetch(`${API_BASE}/products`, { signal });
 			if (!res.ok) throw new Error();
 			const data = await res.json();
 			const list: Product[] = Array.isArray(data)
@@ -54,7 +52,11 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 					? data.products
 					: [];
 			setProducts(list);
-		} catch {
+		} catch (err) {
+			if (err instanceof Error && err.name === "AbortError") {
+				console.log("Aborting request for products");
+				return;
+			}
 			setError("Could not connect to the server.");
 		} finally {
 			setLoading(false);
@@ -62,8 +64,10 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 	}, []);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		// eslint-disable-next-line react-hooks/set-state-in-effect
-		fetchProducts();
+		fetchProducts(controller.signal);
+		return () => controller.abort();
 	}, [fetchProducts]);
 
 	async function createProduct(e: React.FormEvent) {

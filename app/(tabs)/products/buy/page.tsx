@@ -107,11 +107,11 @@ export default function BuyPage() {
 		}
 	}
 
-	const fetchProducts = useCallback(async () => {
+	const fetchProducts = useCallback(async (signal?: AbortSignal) => {
 		setLoading(true);
 		setError(null);
 		try {
-			const res = await fetch(`${API_BASE}/products`);
+			const res = await fetch(`${API_BASE}/products`, { signal });
 			if (!res.ok) throw new Error();
 			const data = await res.json();
 			const list: Product[] = Array.isArray(data)
@@ -120,7 +120,11 @@ export default function BuyPage() {
 					? data.products
 					: [];
 			setProducts(list);
-		} catch {
+		} catch (err) {
+			if (err instanceof Error && err.name === "AbortError") {
+				console.log(`Aborting request for products - buy page`);
+				return;
+			}
 			setError("Could not load products.");
 		} finally {
 			setLoading(false);
@@ -128,8 +132,11 @@ export default function BuyPage() {
 	}, []);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		// eslint-disable-next-line react-hooks/set-state-in-effect
-		fetchProducts();
+		fetchProducts(controller.signal);
+
+		return () => controller.abort();
 	}, [fetchProducts]);
 
 	useEffect(() => {

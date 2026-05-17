@@ -25,11 +25,11 @@ export function TransactionClientPage() {
 		}
 	}, [auth.isLoading, auth.isAuthenticated, router]);
 
-	const fetchTransactions = useCallback(async () => {
+	const fetchTransactions = useCallback(async (signal?: AbortSignal) => {
 		setLoading(true);
 		setError(null);
 		try {
-			const res = await fetch(`${API_BASE}/transactions`);
+			const res = await fetch(`${API_BASE}/transactions`, { signal });
 			if (!res.ok) throw new Error();
 			const data = await res.json();
 			const list: Transaction[] = Array.isArray(data)
@@ -43,7 +43,11 @@ export function TransactionClientPage() {
 					new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
 			);
 			setTransactions(list);
-		} catch {
+		} catch (err) {
+			if (err instanceof Error && err.name === "AbortError") {
+				console.log(`Aborting request for transactions`);
+				return;
+			}
 			setError("Could not load transactions.");
 		} finally {
 			setLoading(false);
@@ -51,8 +55,11 @@ export function TransactionClientPage() {
 	}, []);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		// eslint-disable-next-line react-hooks/set-state-in-effect
-		fetchTransactions();
+		fetchTransactions(controller.signal);
+
+		return () => controller.abort();
 	}, [fetchTransactions]);
 
 	if (auth.isLoading || !auth.isAuthenticated) {
