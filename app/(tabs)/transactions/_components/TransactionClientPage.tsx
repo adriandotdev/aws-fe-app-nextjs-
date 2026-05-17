@@ -67,8 +67,11 @@ export function TransactionClientPage() {
 	// }
 
 	return (
-		<div className="h-dvh overflow-y-auto bg-[#FBF8E9]">
-			<div className="mx-auto max-w-2xl px-4 pb-16 pt-8">
+		<div className="h-dvh pb-17.5 overflow-y-auto bg-[#FBF8E9]">
+			<div
+				className="mx-auto max-w-2xl px-4 pb-16"
+				style={{ paddingTop: "max(2rem, env(safe-area-inset-top))" }}
+			>
 				{/* Header */}
 				<div className="mb-6 flex items-start gap-4">
 					<div>

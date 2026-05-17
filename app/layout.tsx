@@ -17,11 +17,18 @@ const akayaKanadaka = Akaya_Kanadaka({
 export const metadata: Metadata = {
 	title: "Product Manager",
 	description: "Simple product management app",
+	appleWebApp: {
+		capable: true,
+		statusBarStyle: "black-translucent",
+	},
 };
 
 export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
 	maximumScale: 1,
 	userScalable: false,
+	viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -34,7 +41,7 @@ export default function RootLayout({
 			lang="en"
 			className={`${geistSans.variable} ${akayaKanadaka.variable} h-full antialiased`}
 		>
-			<body className="min-h-full flex flex-col overflow-x-hidden ">
+			<body className="h-dvh flex flex-col overflow-hidden">
 				<Providers>{children}</Providers>
 			</body>
 		</html>

@@ -27,7 +27,10 @@ export function BottomNavigation() {
 	const router = useRouter();
 
 	return (
-		<div className="fixed left-0 right-0 bottom-0 min-h-17.5 rounded-tl-3xl rounded-tr-3xl bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex justify-evenly items-center px-6">
+		<div
+			className="fixed left-0 right-0 bottom-0 min-h-17.5 rounded-tl-3xl rounded-tr-3xl bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex justify-evenly items-center px-6"
+			style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+		>
 			{tabItems.map((item, index) => {
 				return (
 					<button

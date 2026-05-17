@@ -217,7 +217,7 @@ export default function BuyPage() {
 
 	if (checkedOut) {
 		return (
-			<div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-[#FBF8E9] px-6 text-center">
+			<div className="flex h-dvh flex-col items-center justify-center gap-4 bg-[#FBF8E9] px-6 text-center">
 				<motion.div
 					initial={{ scale: 0, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
@@ -269,7 +269,10 @@ export default function BuyPage() {
 	return (
 		<>
 			<div className="h-dvh overflow-y-auto bg-[#FBF8E9]">
-				<div className="mx-auto max-w-2xl px-4 pb-32 pt-8">
+				<div
+					className="mx-auto max-w-2xl px-4 pb-32"
+					style={{ paddingTop: "max(2rem, env(safe-area-inset-top))" }}
+				>
 					{/* Header */}
 					<div className="mb-6 flex items-start justify-between gap-4">
 						<div>
@@ -438,7 +441,10 @@ export default function BuyPage() {
 							exit={{ opacity: 0, y: 20 }}
 							transition={{ duration: 0.22, ease: "easeIn" }}
 							onClick={() => setCartOpen(true)}
-							className="fixed bottom-24 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl bg-[#2C5F14] px-5 py-3.5 shadow-xl shadow-[#2C5F14]/30 text-[#F5C012] transition active:scale-95"
+							className="fixed bottom-22 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-2xl bg-[#2C5F14] px-5 py-3.5 shadow-xl shadow-[#2C5F14]/30 text-[#F5C012] transition active:scale-95"
+							style={{
+								marginBottom: "max(0.5rem, env(safe-area-inset-bottom))",
+							}}
 						>
 							<ShoppingCart size={18} />
 							<span className="text-sm font-medium">

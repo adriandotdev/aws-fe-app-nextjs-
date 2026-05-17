@@ -46,7 +46,7 @@ export default function Home() {
 	return (
 		<div className="flex h-dvh flex-col bg-[#FBF8E9] px-6 overflow-hidden">
 			{/* Top section — logo & copy */}
-			<div className="flex flex-1 flex-col items-center justify-center text-center">
+			<div className="flex flex-1 flex-col items-center justify-center text-center pb-28">
 				<motion.div
 					initial={{ opacity: 0, scale: 0.6 }}
 					animate={{ opacity: 1, scale: 1 }}
@@ -78,9 +78,10 @@ export default function Home() {
 				</motion.p>
 			</div>
 
-			{/* Bottom section — CTA */}
+			{/* Bottom section — CTA (fixed so it's always anchored to the visible viewport) */}
 			<motion.div
-				className="pb-10 pt-6"
+				className="fixed bottom-0 left-0 right-0 bg-[#FBF8E9] px-6 pt-6"
+				style={{ paddingBottom: "max(2.5rem, env(safe-area-inset-bottom))" }}
 				initial={{ opacity: 0, y: 32 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}

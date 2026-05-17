@@ -181,7 +181,10 @@ export function ProductsPageContent({ onSignOut }: { onSignOut: () => void }) {
 
 	return (
 		<div className="h-dvh overflow-y-auto bg-[#FBF8E9] pb-8">
-			<div className="mx-auto max-w-2xl px-4 pb-16 pt-8">
+			<div
+				className="mx-auto max-w-2xl px-4 pb-16"
+				style={{ paddingTop: "max(2rem, env(safe-area-inset-top))" }}
+			>
 				{/* Header */}
 				<div className="mb-6 flex items-start justify-between">
 					<div>
