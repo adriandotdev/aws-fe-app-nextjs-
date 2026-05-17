@@ -14,9 +14,9 @@ import {
 	X,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useReducer, useState } from "react";
-import { useAuth } from "react-oidc-context";
+// import { useAuth } from "react-oidc-context";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
@@ -67,8 +67,8 @@ function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
 }
 
 export default function BuyPage() {
-	const auth = useAuth();
-	const router = useRouter();
+	// const auth = useAuth();
+	// const router = useRouter();
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -159,11 +159,11 @@ export default function BuyPage() {
 		return matchCat && matchSearch;
 	});
 
-	useEffect(() => {
-		if (!auth.isLoading && !auth.isAuthenticated) {
-			router.replace("/");
-		}
-	}, [auth.isLoading, auth.isAuthenticated, router]);
+	// useEffect(() => {
+	// 	if (!auth.isLoading && !auth.isAuthenticated) {
+	// 		router.replace("/");
+	// 	}
+	// }, [auth.isLoading, auth.isAuthenticated, router]);
 
 	const usedCategories = [
 		"All",
@@ -254,6 +254,14 @@ export default function BuyPage() {
 				>
 					New sale
 				</motion.button>
+			</div>
+		);
+	}
+
+	if (loading) {
+		return (
+			<div className="flex min-h-dvh items-center justify-center bg-[#FBF8E9]">
+				<p className="text-sm text-[#2C5F14]/50">Loading…</p>
 			</div>
 		);
 	}

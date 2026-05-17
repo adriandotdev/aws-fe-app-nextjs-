@@ -1,25 +1,25 @@
 "use client";
 
 import { ReceiptText } from "lucide-react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { useAuth } from "react-oidc-context";
+// import { useAuth } from "react-oidc-context";
 import { Transaction, TransactionCard } from "./TransactionCard";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 export function TransactionClientPage() {
-	const auth = useAuth();
-	const router = useRouter();
+	// const auth = useAuth();
+	// const router = useRouter();
 	const [transactions, setTransactions] = useState<Transaction[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
-	useEffect(() => {
-		if (!auth.isLoading && !auth.isAuthenticated) {
-			router.replace("/");
-		}
-	}, [auth.isLoading, auth.isAuthenticated, router]);
+	// useEffect(() => {
+	// 	if (!auth.isLoading && !auth.isAuthenticated) {
+	// 		router.replace("/");
+	// 	}
+	// }, [auth.isLoading, auth.isAuthenticated, router]);
 
 	const fetchTransactions = useCallback(async (signal?: AbortSignal) => {
 		setLoading(true);
@@ -58,13 +58,13 @@ export function TransactionClientPage() {
 		return () => controller.abort();
 	}, [fetchTransactions]);
 
-	if (auth.isLoading || !auth.isAuthenticated) {
-		return (
-			<div className="flex min-h-dvh items-center justify-center bg-[#FBF8E9]">
-				<p className="text-sm text-[#2C5F14]/40">Loading…</p>
-			</div>
-		);
-	}
+	// if (auth.isLoading || !auth.isAuthenticated) {
+	// 	return (
+	// 		<div className="flex min-h-dvh items-center justify-center bg-[#FBF8E9]">
+	// 			<p className="text-sm text-[#2C5F14]/40">Loading…</p>
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<div className="h-dvh overflow-y-auto bg-[#FBF8E9]">

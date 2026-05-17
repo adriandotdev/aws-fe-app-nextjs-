@@ -5,25 +5,25 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useAuth } from "react-oidc-context";
+// import { useAuth } from "react-oidc-context";
 import {
 	InstallPromptDialog,
 	useInstallPrompt,
 } from "./components/install-prompt";
 
 export default function Home() {
-	const auth = useAuth();
+	// const auth = useAuth();
 	const router = useRouter();
 	const { isIOS, isStandalone, isOpen, setIsOpen, handleInstall } =
 		useInstallPrompt();
 	const [menuOpen, setMenuOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => {
-		if (!auth.isLoading && auth.isAuthenticated) {
-			router.replace("/products");
-		}
-	}, [auth.isLoading, auth.isAuthenticated, router]);
+	// useEffect(() => {
+	// 	if (!auth.isLoading && auth.isAuthenticated) {
+	// 		router.replace("/products");
+	// 	}
+	// }, [auth.isLoading, auth.isAuthenticated, router]);
 
 	useEffect(() => {
 		function onClickOutside(e: MouseEvent) {
@@ -35,13 +35,13 @@ export default function Home() {
 		return () => document.removeEventListener("mousedown", onClickOutside);
 	}, [menuOpen]);
 
-	if (auth.isLoading || auth.isAuthenticated) {
-		return (
-			<div className="flex min-h-screen items-center justify-center bg-[#FBF8E9]">
-				<p className="text-sm text-[#2C5F14]/50">Loading…</p>
-			</div>
-		);
-	}
+	// if (auth.isLoading || auth.isAuthenticated) {
+	// 	return (
+	// 		<div className="flex min-h-screen items-center justify-center bg-[#FBF8E9]">
+	// 			<p className="text-sm text-[#2C5F14]/50">Loading…</p>
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<div className="flex h-dvh flex-col bg-[#FBF8E9] px-6 overflow-hidden">
@@ -86,7 +86,7 @@ export default function Home() {
 				transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
 			>
 				<button
-					onClick={() => auth.signinRedirect()}
+					onClick={() => router.replace("/products")}
 					className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#2C5F14] px-4 py-4 text-base font-semibold text-white transition active:scale-95"
 				>
 					Sign In
