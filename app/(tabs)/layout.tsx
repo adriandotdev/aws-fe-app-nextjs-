@@ -6,7 +6,7 @@ interface TabLayoutProps {
 
 export default function TabLayout({ children }: TabLayoutProps) {
 	return (
-		<main className="pb-17.5 overflow-x-hidden">
+		<main className="pb-17.5 overflow-hidden">
 			{children}
 
 			<BottomNavigation />
